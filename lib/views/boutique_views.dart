@@ -13,23 +13,30 @@ class Product {
       required this.image});
 }
 
-class BoutiquePage extends StatelessWidget {
+class BoutiquePage extends StatefulWidget {
+  const BoutiquePage({Key? key}) : super(key: key);
+
+  @override
+  State<BoutiquePage> createState() => _BoutiquePage();
+}
+
+class _BoutiquePage extends State<BoutiquePage> {
   final List<Product> products = [
     Product(
         name: 'Produit 1',
         category: 'Catégorie 1',
         quantity: 10,
-        image: 'assets/images/vetement.jpg'),
+        image: 'assets/vetements.jpg'),
     Product(
         name: 'Produit 2',
         category: 'Catégorie 2',
         quantity: 15,
-        image: 'assets/images/vetement.jpg'),
+        image: 'assets/telechargement.jpg'),
     Product(
         name: 'Produit 3',
         category: 'Catégorie 1',
         quantity: 5,
-        image: 'assets/images/vetement.jpg'),
+        image: 'assets/vetements.jpg'),
     // Ajoutez d'autres produits ici
   ];
 
@@ -59,41 +66,74 @@ class BoutiquePage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(products[index].image),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Image.asset(
+                      products[index].image,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 );
               },
             ),
           ),
           Expanded(
             child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 1.0, 
-                crossAxisSpacing:
-                    1.0, 
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // Nombre de colonnes
               ),
               itemCount: products.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  contentPadding: const EdgeInsets.all(16.0),
-                  leading: Container(
-                    width: 80,
-                    height: 80,
-                    // decoration: BoxDecoration(
-                    //   borderRadius: BorderRadius.circular(10.0),
-                    //   image: DecorationImage(
-                    //     image: AssetImage(products[index].image),
-                    //     fit: BoxFit.cover,
-                    //   ),
-                    // ),
-                  ),
-                  title: Text(products[index].name),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(products[index].category),
-                      Text('Disponible: ${products[index].quantity}'),
-                    ],
+                return Container(
+                  margin: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Image.asset(
+                            products[index].image,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Positioned(
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              color: Colors.black.withOpacity(0.6),
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    products[index].category,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 8.0),
+                                  Text(
+                                    'Disponible: ${products[index].quantity}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
