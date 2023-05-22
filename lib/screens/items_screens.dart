@@ -22,11 +22,78 @@ class _ItemsPageState extends State<ItemsPage> {
     'Les plus aimés',
   ];
 
+  List<Item> items = [
+    Item(
+        image: 'assets/vetements.jpg',
+        title: 'Item 1',
+        subtitle: 'Description de l\'item 1',
+        price: '\$10'),
+    Item(
+        image: 'assets/vetements.jpg',
+        title: 'Item 2',
+        subtitle: 'Description de l\'item 2',
+        price: '\$20'),
+    Item(
+        image: 'assets/vetements.jpg',
+        title: 'Item 3',
+        subtitle: 'Description de l\'item 3',
+        price: '\$15'),
+    Item(
+        image: 'assets/vetements.jpg',
+        title: 'Item 4',
+        subtitle: 'Description de l\'item 4',
+        price: '\$25'),
+    Item(
+        image: 'assets/vetements.jpg',
+        title: 'Item 5',
+        subtitle: 'Description de l\'item 5',
+        price: '\$18'),
+  ];
+
+  List<Item> filteredItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredItems = items; // Afficher tous les articles par défaut
+  }
+
+  void applyFilter() {
+    switch (_selectedFilter) {
+      case 'Moins chers':
+        filteredItems = items
+            .where((item) => double.parse(item.price.substring(1)) < 20)
+            .toList();
+        break;
+      case 'Plus chers':
+        filteredItems = items
+            .where((item) => double.parse(item.price.substring(1)) >= 20)
+            .toList();
+        break;
+      case 'Nouveautés':
+        filteredItems =
+            items; // Ajoutez votre logique pour filtrer par nouveautés
+        break;
+      case 'Les plus aimés':
+        filteredItems =
+            items; // Ajoutez votre logique pour filtrer par les plus aimés
+        break;
+      default:
+        filteredItems = items; // Afficher tous les articles par défaut
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-       
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.black),
+          title: Text(widget.product.name),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +149,8 @@ class _ItemsPageState extends State<ItemsPage> {
                     selected: _selectedFilter == option,
                     onSelected: (selected) {
                       setState(() {
-                        _selectedFilter = selected ? option : 'Tous les articles';
+                        _selectedFilter = option;
+                        applyFilter();
                       });
                     },
                   );
@@ -90,26 +158,81 @@ class _ItemsPageState extends State<ItemsPage> {
               ),
             ),
           Expanded(
-            child: GridView.count(
-              crossAxisCount: 2,
-              children: [
-                // Afficher les éléments filtrés ici
-                // Exemple d'élément :
-                Container(
-                  margin: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(10.0),
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemCount: filteredItems.length,
+              itemBuilder: (BuildContext context, int index) {
+                final item = filteredItems[index];
+                return Container(
+                  color: Colors.transparent,
+                  child: Card(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    color: Colors.transparent,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: FractionallySizedBox(
+                            widthFactor:
+                                0.8, // Ajustez la fraction selon vos besoins
+                            child: Image.asset(
+                              item.image,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                item.title,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(item.subtitle),
+                              Text(
+                                item.price,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Center(
-                    child: Text('Élément'),
-                  ),
-                ),
-              ],
+                );
+              },
             ),
           ),
         ],
       ),
     );
   }
+}
+
+class Item {
+  final String image;
+  final String title;
+  final String subtitle;
+  final String price;
+
+  Item(
+      {required this.image,
+      required this.title,
+      required this.subtitle,
+      required this.price});
 }
