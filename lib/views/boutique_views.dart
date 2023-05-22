@@ -84,55 +84,61 @@ class _BoutiquePage extends State<BoutiquePage> {
               ),
               itemCount: products.length,
               itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: Stack(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Image.asset(
-                            products[index].image,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Positioned(
-                          left: 0,
-                          right: 0,
-                          bottom: 0,
-                          child: ClipRRect(
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/items',
+                        arguments: products[index]);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: Stack(
+                        children: [
+                          ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
-                            child: Container(
-                              color: Colors.black.withOpacity(0.6),
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    products[index].category,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
+                            child: Image.asset(
+                              products[index].image,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Positioned(
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Container(
+                                color: Colors.black.withOpacity(0.6),
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      products[index].category,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 8.0),
-                                  Text(
-                                    'Disponible: ${products[index].quantity}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14.0,
+                                    SizedBox(height: 8.0),
+                                    Text(
+                                      'Disponible: ${products[index].quantity}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14.0,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );

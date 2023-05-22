@@ -11,3 +11,4 @@ void navigateToHomePage(BuildContext context) {
 void navigateToRegisterPage(BuildContext context) {
   Navigator.pushNamed(context, '/register'); // Remplacez '/register' par le nom de la route de votre page d'inscription
 }
+
