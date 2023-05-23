@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import '../views/boutique_views.dart';
@@ -26,26 +28,31 @@ class _ItemsPageState extends State<ItemsPage> {
     Item(
         image: 'assets/vetements.jpg',
         title: 'Item 1',
+        isLiked: false,
         subtitle: 'Categoriede l\'item 1',
         price: '\$10'),
     Item(
         image: 'assets/vetements.jpg',
         title: 'Item 2',
+        isLiked: false,
         subtitle: 'Categoriede l\'item 2',
         price: '\$20'),
     Item(
         image: 'assets/vetements.jpg',
         title: 'Item 3',
+        isLiked: false,
         subtitle: 'Categoriede l\'item 3',
         price: '\$15'),
     Item(
         image: 'assets/vetements.jpg',
         title: 'Item 4',
+        isLiked: false,
         subtitle: 'Categoriede l\'item 4',
         price: '\$25'),
     Item(
         image: 'assets/vetements.jpg',
         title: 'Item 5',
+        isLiked: false,
         subtitle: 'Categoriede l\'item 5',
         price: '\$18'),
   ];
@@ -86,13 +93,10 @@ class _ItemsPageState extends State<ItemsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          iconTheme: IconThemeData(color: Colors.black),
-        ),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,14 +130,24 @@ class _ItemsPageState extends State<ItemsPage> {
                   ),
                 ),
                 SizedBox(width: 8.0),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _isFilterVisible = !_isFilterVisible;
-                    });
-                  },
-                  icon: Icon(Icons.filter_list),
-                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors
+                        .black, // Set the background color of the IconButton to black
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _isFilterVisible = !_isFilterVisible;
+                      });
+                    },
+                    icon: Icon(
+                      Icons.filter_list,
+                      color: Colors.white, // Set the color of the icon to white
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -160,10 +174,9 @@ class _ItemsPageState extends State<ItemsPage> {
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.75
+                childAspectRatio: 0.75,
               ),
               itemCount: filteredItems.length,
-            
               itemBuilder: (BuildContext context, int index) {
                 final item = filteredItems[index];
                 return Container(
@@ -178,16 +191,45 @@ class _ItemsPageState extends State<ItemsPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        ClipRRect( 
-                          borderRadius: BorderRadius.circular(10),
-                          child: FractionallySizedBox(
-                            child: Image.asset(
-                              item.image,
-                              height: 170,
-                              width: 150,
-                              fit: BoxFit.cover,
+                        Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: FractionallySizedBox(
+                                child: Image.asset(
+                                  item.image,
+                                  height: 170,
+                                  width: 150,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
-                          ),
+                            Positioned(
+                                top: 5,
+                                right: 2,
+                                child: Container(
+                                  height: 38,
+                                  decoration: BoxDecoration(
+                                    color: Colors.black, // Set the background color of the IconButton to black
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        item.isLiked = !item.isLiked;
+                                      });
+                                    },
+                                    icon: Icon(
+                                      item.isLiked
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color: item.isLiked
+                                          ? Colors.red
+                                          : Colors.white,
+                                    ),
+                                  ),
+                                )),
+                          ],
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -230,10 +272,12 @@ class Item {
   final String title;
   final String subtitle;
   final String price;
+  bool isLiked;
 
   Item(
       {required this.image,
       required this.title,
       required this.subtitle,
-      required this.price});
+      required this.price,
+      required this.isLiked});
 }
