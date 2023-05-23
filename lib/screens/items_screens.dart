@@ -26,27 +26,27 @@ class _ItemsPageState extends State<ItemsPage> {
     Item(
         image: 'assets/vetements.jpg',
         title: 'Item 1',
-        subtitle: 'Description de l\'item 1',
+        subtitle: 'Categoriede l\'item 1',
         price: '\$10'),
     Item(
         image: 'assets/vetements.jpg',
         title: 'Item 2',
-        subtitle: 'Description de l\'item 2',
+        subtitle: 'Categoriede l\'item 2',
         price: '\$20'),
     Item(
         image: 'assets/vetements.jpg',
         title: 'Item 3',
-        subtitle: 'Description de l\'item 3',
+        subtitle: 'Categoriede l\'item 3',
         price: '\$15'),
     Item(
         image: 'assets/vetements.jpg',
         title: 'Item 4',
-        subtitle: 'Description de l\'item 4',
+        subtitle: 'Categoriede l\'item 4',
         price: '\$25'),
     Item(
         image: 'assets/vetements.jpg',
         title: 'Item 5',
-        subtitle: 'Description de l\'item 5',
+        subtitle: 'Categoriede l\'item 5',
         price: '\$18'),
   ];
 
@@ -92,14 +92,13 @@ class _ItemsPageState extends State<ItemsPage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.black),
-          title: Text(widget.product.name),
         ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(15.0),
             child: Row(
               children: [
                 Expanded(
@@ -161,8 +160,10 @@ class _ItemsPageState extends State<ItemsPage> {
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
+                childAspectRatio: 0.75
               ),
               itemCount: filteredItems.length,
+            
               itemBuilder: (BuildContext context, int index) {
                 final item = filteredItems[index];
                 return Container(
@@ -177,13 +178,13 @@ class _ItemsPageState extends State<ItemsPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        ClipRRect(
+                        ClipRRect( 
                           borderRadius: BorderRadius.circular(10),
                           child: FractionallySizedBox(
-                            widthFactor:
-                                0.8, // Ajustez la fraction selon vos besoins
                             child: Image.asset(
                               item.image,
+                              height: 170,
+                              width: 150,
                               fit: BoxFit.cover,
                             ),
                           ),
