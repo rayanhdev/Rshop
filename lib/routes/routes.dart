@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:shop/screens/items_screens.dart';
 import 'package:shop/screens/login_screens.dart';
 
+import '../models/item_models.dart';
 import '../screens/home_screens.dart';
+import '../screens/item_screens.dart';
 import '../screens/register_screens.dart';
 import '../views/boutique_views.dart';
 
@@ -11,6 +13,7 @@ class Routes {
   static const String home = '/home';
   static const String register = '/register';
   static const String items = '/items';
+  static const String item = '/item';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -24,6 +27,11 @@ class Routes {
       case items:
         if (args is Product) {
           return MaterialPageRoute(builder: (_) => ItemsPage(product: args));
+        }
+        return null;
+      case item:
+        if (args is Item) {
+          return MaterialPageRoute(builder: (_) => ItemDetailsPage(item: args));
         }
         return null;
       default:

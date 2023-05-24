@@ -2,7 +2,9 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
+import '../models/item_models.dart';
 import '../views/boutique_views.dart';
+import 'item_screens.dart';
 
 class ItemsPage extends StatefulWidget {
   final Product product;
@@ -26,31 +28,31 @@ class _ItemsPageState extends State<ItemsPage> {
 
   List<Item> items = [
     Item(
-        image: 'assets/vetements.jpg',
+        image: ['assets/vetements.jpg', 'assets/vetements.jpg', 'assets/vetements.jpg'],
         title: 'Item 1',
         isLiked: false,
         subtitle: 'Categoriede l\'item 1',
         price: '\$10'),
     Item(
-        image: 'assets/vetements.jpg',
+        image: ['assets/vetements.jpg', 'assets/vetements.jpg', 'assets/vetements.jpg'],
         title: 'Item 2',
         isLiked: false,
         subtitle: 'Categoriede l\'item 2',
         price: '\$20'),
     Item(
-        image: 'assets/vetements.jpg',
+        image: ['assets/vetements.jpg', 'assets/vetements.jpg', 'assets/vetements.jpg'],
         title: 'Item 3',
         isLiked: false,
         subtitle: 'Categoriede l\'item 3',
         price: '\$15'),
     Item(
-        image: 'assets/vetements.jpg',
+        image: ['assets/vetements.jpg', 'assets/vetements.jpg', 'assets/vetements.jpg'],
         title: 'Item 4',
         isLiked: false,
         subtitle: 'Categoriede l\'item 4',
         price: '\$25'),
     Item(
-        image: 'assets/vetements.jpg',
+        image: ['assets/vetements.jpg', 'assets/vetements.jpg', 'assets/vetements.jpg'],
         title: 'Item 5',
         isLiked: false,
         subtitle: 'Categoriede l\'item 5',
@@ -179,82 +181,90 @@ class _ItemsPageState extends State<ItemsPage> {
               itemCount: filteredItems.length,
               itemBuilder: (BuildContext context, int index) {
                 final item = filteredItems[index];
-                return Container(
-                  color: Colors.transparent,
-                  child: Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide.none,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
+                return GestureDetector(
+                  onTap: () {
+                    // Navigate to the new page with item details
+                   Navigator.pushNamed(context, '/item',
+                        arguments: item);
+                  },
+                  child: Container(
                     color: Colors.transparent,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: FractionallySizedBox(
-                                child: Image.asset(
-                                  item.image,
-                                  height: 170,
-                                  width: 150,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                                top: 5,
-                                right: 2,
-                                child: Container(
-                                  height: 38,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black, // Set the background color of the IconButton to black
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        item.isLiked = !item.isLiked;
-                                      });
-                                    },
-                                    icon: Icon(
-                                      item.isLiked
-                                          ? Icons.favorite
-                                          : Icons.favorite_border,
-                                      color: item.isLiked
-                                          ? Colors.red
-                                          : Colors.white,
-                                    ),
-                                  ),
-                                )),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                    child: Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      color: Colors.transparent,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Stack(
                             children: [
-                              Text(
-                                item.title,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: FractionallySizedBox(
+                                  child: Image.asset(
+                                    item.image[0],
+                                    height: 170,
+                                    width: 150,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
-                              Text(item.subtitle),
-                              Text(
-                                item.price,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16.0,
-                                ),
-                              ),
+                              Positioned(
+                                  top: 5,
+                                  right: 2,
+                                  child: Container(
+                                    height: 38,
+                                    decoration: BoxDecoration(
+                                      color: Colors
+                                          .black, // Set the background color of the IconButton to black
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          item.isLiked = !item.isLiked;
+                                        });
+                                      },
+                                      icon: Icon(
+                                        item.isLiked
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        color: item.isLiked
+                                            ? Colors.red
+                                            : Colors.white,
+                                      ),
+                                    ),
+                                  )),
                             ],
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  item.title,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(item.subtitle),
+                                Text(
+                                  item.price,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -267,17 +277,3 @@ class _ItemsPageState extends State<ItemsPage> {
   }
 }
 
-class Item {
-  final String image;
-  final String title;
-  final String subtitle;
-  final String price;
-  bool isLiked;
-
-  Item(
-      {required this.image,
-      required this.title,
-      required this.subtitle,
-      required this.price,
-      required this.isLiked});
-}
