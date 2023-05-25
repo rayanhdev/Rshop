@@ -51,28 +51,11 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
     return Scaffold(
       body: Column(
         children: [
-          Stack(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.45,
-                child: CarouselSlider(
-                  items: widget.item.image.map((image) {
-                    return Image.asset(
-                      image,
-                      fit: BoxFit.cover,
-                    );
-                  }).toList(),
-                  options: CarouselOptions(
-                    height: MediaQuery.of(context).size.height * 0.5,
-                    viewportFraction: 1.0,
-                    enlargeCenterPage: false,
-                    aspectRatio: 2.0,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 10,
-                left: 16.0,
+              Padding(
+                padding: EdgeInsets.only(top: 10, left: 10),
                 child: Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -89,11 +72,14 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                   ),
                 ),
               ),
-              Positioned(
-                top: 10,
-                right: 16.0,
+              Padding(
+                padding: EdgeInsets.only(top: 10, right: 10),
                 child: Container(
                   decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: 1,
+                    ),
                     shape: BoxShape.circle,
                     color: Colors.white,
                   ),
@@ -105,6 +91,27 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                       Icons.shopping_cart,
                       color: Colors.black,
                     ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Stack(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.45,
+                child: CarouselSlider(
+                  items: widget.item.image.map((image) {
+                    return Image.asset(
+                      image,
+                      fit: BoxFit.cover,
+                    );
+                  }).toList(),
+                  options: CarouselOptions(
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    viewportFraction: 1.0,
+                    enlargeCenterPage: false,
+                    aspectRatio: 2.0,
                   ),
                 ),
               ),
@@ -286,25 +293,28 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                     ),
                   ),
                   SizedBox(height: 8),
-                  SingleChildScrollView(
-                    child: Padding(
+                  Expanded(
+                      child: Scrollbar(
+                    child: ListView(
                       padding: EdgeInsets.all(1),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 8),
-                          Text(
-                            'Votre texte long provenant des données ici',
-                            style: TextStyle(
-                              fontSize: 16,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 8),
+                            Text(
+                              'Votre texte long provenant des données ici',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                          // Ajoutez d'autres widgets ici si nécessaire
-                        ],
-                      ),
+                            // Ajoutez d'autres widgets ici si nécessaire
+                          ],
+                        ),
+                      ],
                     ),
-                  ),
+                  )),
                 ],
               ),
             ),
