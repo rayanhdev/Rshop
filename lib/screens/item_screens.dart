@@ -18,13 +18,13 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
   bool _isPressed = false;
 
   List<Color> colors = [
-  Colors.red,
-  Colors.blue,
-  Colors.green,
-  Colors.yellow,
-];
+    Colors.red,
+    Colors.blue,
+    Colors.green,
+    Colors.yellow,
+  ];
 
-  late Color selectedColor;
+  late Color selectedColor = colors[0];
 
   void decrementQuantity() {
     setState(() {
@@ -54,7 +54,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
           Stack(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.45,
                 child: CarouselSlider(
                   items: widget.item.image.map((image) {
                     return Image.asset(
@@ -111,7 +111,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(top: 8, left: 16.0, right: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,7 +168,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.only(left: 16.0, right: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -223,7 +223,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                   ],
                 ),
                 Container(
-                  width: 60,
+                  width: 40,
                   height: 120,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
@@ -231,106 +231,152 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                   ),
                   child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8),
-                          child: Row(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child: Column(
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    selectedColor = colors[0];
-                                  });
-                                },
-                                child: Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: colors[0],
-                                  ),
-                                  child: Icon(
-                                    Icons.check,
-                                    color: selectedColor == colors[0]
-                                        ? Colors.white
-                                        : Colors.transparent,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 8),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    selectedColor = colors[1];
-                                  });
-                                },
-                                child: Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: colors[1],
-                                  ),
-                                  child: Icon(
-                                    Icons.check,
-                                    color: selectedColor == colors[1]
-                                        ? Colors.white
-                                        : Colors.transparent,
+                              for (int i = 0; i < colors.length; i++)
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 8),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedColor = colors[i];
+                                      });
+                                    },
+                                    child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25),
+                                        color: colors[i],
+                                      ),
+                                      child: Icon(
+                                        Icons.check,
+                                        color: selectedColor == colors[i]
+                                            ? Colors.white
+                                            : Colors.transparent,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(width: 8),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    selectedColor = colors[2];
-                                  });
-                                },
-                                child: Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: colors[2],
-                                  ),
-                                  child: Icon(
-                                    Icons.check,
-                                    color: selectedColor == colors[2]
-                                        ? Colors.white
-                                        : Colors.transparent,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 8),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    selectedColor = colors[3];
-                                  });
-                                },
-                                child: Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: colors[3],
-                                  ),
-                                  child: Icon(
-                                    Icons.check,
-                                    color: selectedColor == colors[3]
-                                        ? Colors.white
-                                        : Colors.transparent,
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
                       ],
                     ),
                   ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(left: 16, right: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Description',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.all(1),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 8),
+                          Text(
+                            'Votre texte long provenant des données ici',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                          // Ajoutez d'autres widgets ici si nécessaire
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 10, left: 16, right: 16, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Total Price',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Text(
+                          '\$128',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(width: 8),
+                Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        // Logique du bouton ici
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.shopping_bag_outlined,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 8),
+                              Text(
+                                'Add to Cart',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
