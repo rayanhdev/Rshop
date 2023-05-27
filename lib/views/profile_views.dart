@@ -133,7 +133,7 @@ class ProfilePage extends StatelessWidget {
                           SizedBox(width: 16),
                           Expanded(
                             child: Text(
-                              'Mon profil',
+                              'My Favourites',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -167,7 +167,7 @@ class ProfilePage extends StatelessWidget {
                           SizedBox(width: 16),
                           Expanded(
                             child: Text(
-                              'Mon profil',
+                              'Shipping',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
