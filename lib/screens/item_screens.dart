@@ -24,6 +24,24 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
     Colors.yellow,
   ];
 
+  final CarouselController _carouselController = CarouselController();
+  int _currentImageIndex = 0;
+
+  List<Widget> carouselItems = [
+    Image.network(
+      'https://img.freepik.com/vecteurs-libre/creation-logo-local-magasin-dessine-main_23-2149575766.jpg?w=2000',
+      fit: BoxFit.cover,
+    ),
+    Image.network(
+      'https://img.freepik.com/vecteurs-libre/creation-logo-local-magasin-dessine-main_23-2149575766.jpg?w=2000',
+      fit: BoxFit.cover,
+    ),
+    Image.network(
+      'https://img.freepik.com/vecteurs-libre/creation-logo-local-magasin-dessine-main_23-2149575766.jpg?w=2000',
+      fit: BoxFit.cover,
+    ),
+  ];
+
   late Color selectedColor = colors[0];
 
   void decrementQuantity() {
@@ -49,73 +67,93 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: Padding(
+          padding: EdgeInsets.only(top: 10, left: 10),
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.black,
+            ),
+            child: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(top: 10, right: 10),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 1,
+                ),
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/shoppingCart');
+                },
+                icon: Icon(
+                  Icons.shopping_cart,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 10, left: 10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.black,
-                  ),
-                  child: IconButton(
-                    onPressed: () {
-                      // Handle back button press
-                    },
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 10, right: 10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 1,
-                    ),
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                  ),
-                  child: IconButton(
-                    onPressed: () {
-                      // Handle cart button press
-                    },
-                    icon: Icon(
-                      Icons.shopping_cart,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Stack(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.45,
-                child: CarouselSlider(
-                  items: widget.item.image.map((image) {
-                    return Image.asset(
-                      image,
-                      fit: BoxFit.cover,
-                    );
-                  }).toList(),
+          Container(
+            height: 300,
+            child: Column(
+              children: [
+                CarouselSlider(
+                  items: carouselItems,
                   options: CarouselOptions(
-                    height: MediaQuery.of(context).size.height * 0.5,
-                    viewportFraction: 1.0,
-                    enlargeCenterPage: false,
-                    aspectRatio: 2.0,
+                    height: 250.0,
+                    enlargeCenterPage: true,
+                    aspectRatio: 16 / 9,
+                    enableInfiniteScroll: true,
+                    viewportFraction: 0.8,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        _currentImageIndex = index;
+                      });
+                    },
                   ),
                 ),
-              ),
-            ],
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    for (int i = 0; i < carouselItems.length; i++)
+                      Container(
+                        width: 8,
+                        height: 8,
+                        margin: EdgeInsets.symmetric(horizontal: 4),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _currentImageIndex == i
+                              ? Colors.blue
+                              : Colors.grey,
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, left: 16.0, right: 16),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../views/boutique_views.dart';
-import '../views/compte_views.dart';
+import '../views/profile_views.dart';
 import '../views/panier_views.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _views = [
     BoutiquePage(),
     PanierPage(),
-    ComptePage(),
+    ProfilePage(),
   ];
 
   @override
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
-            label: 'Compte',
+            label: 'Profil',
           ),
         ],
       ),

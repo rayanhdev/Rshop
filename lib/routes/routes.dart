@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop/screens/items_screens.dart';
 import 'package:shop/screens/login_screens.dart';
+import 'package:shop/views/panier_views.dart';
 
 import '../models/item_models.dart';
 import '../screens/home_screens.dart';
@@ -14,6 +15,7 @@ class Routes {
   static const String register = '/register';
   static const String items = '/items';
   static const String item = '/item';
+  static const String shoppingCart = '/shoppingCart';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -22,6 +24,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => LoginPage());
       case home:
         return MaterialPageRoute(builder: (_) => HomePage());
+      case shoppingCart:
+        return MaterialPageRoute(builder: (_) => PanierPage());
       case register:
         return MaterialPageRoute(builder: (_) => RegisterPage());
       case items:
