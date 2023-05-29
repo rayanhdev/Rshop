@@ -16,6 +16,7 @@ class ItemsPage extends StatefulWidget {
 }
 
 class _ItemsPageState extends State<ItemsPage> {
+  TextEditingController _searchController = TextEditingController();
   bool _isFilterVisible = false;
   String _selectedFilter = 'Tous les articles';
   List<String> _filterOptions = [
@@ -29,7 +30,7 @@ class _ItemsPageState extends State<ItemsPage> {
   List<Item> items = [
     Item(
       id: '1',
-      title: 'Item 1',
+      title: 'nike 1',
       brand: 'Brand 1',
       price: 10.0,
       colorImagesMap: {
@@ -44,7 +45,7 @@ class _ItemsPageState extends State<ItemsPage> {
     ),
     Item(
       id: '2',
-      title: 'Item 2',
+      title: 'lacoste 2',
       brand: 'Brand 2',
       price: 20.0,
       colorImagesMap: {
@@ -59,7 +60,7 @@ class _ItemsPageState extends State<ItemsPage> {
     ),
     Item(
       id: '3',
-      title: 'Item 3',
+      title: 'adidas 3',
       brand: 'Brand 3',
       price: 15.0,
       colorImagesMap: {
@@ -74,7 +75,7 @@ class _ItemsPageState extends State<ItemsPage> {
     ),
     Item(
       id: '4',
-      title: 'Item 4',
+      title: 'versace 4',
       brand: 'Brand 4',
       price: 25.0,
       colorImagesMap: {
@@ -89,7 +90,7 @@ class _ItemsPageState extends State<ItemsPage> {
     ),
     Item(
       id: '5',
-      title: 'Item 5',
+      title: 'puma 5',
       brand: 'Brand 5',
       price: 18.0,
       colorImagesMap: {
@@ -104,11 +105,28 @@ class _ItemsPageState extends State<ItemsPage> {
     ),
   ];
 
+  void _onSearchTextChanged() {
+    setState(() {
+      String searchText = _searchController.text.toLowerCase();
+      filteredItems = items.where((item) {
+        final title = item.title.toLowerCase();
+        return title.contains(searchText);
+      }).toList(); 
+    });
+  }
+
   List<Item> filteredItems = [];
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchTextChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
+    _searchController.addListener(_onSearchTextChanged);
     filteredItems = items; // Afficher tous les articles par défaut
   }
 
@@ -166,6 +184,7 @@ class _ItemsPageState extends State<ItemsPage> {
                         ),
                         Expanded(
                           child: TextField(
+                            controller: _searchController,
                             decoration: InputDecoration(
                               hintText: 'Rechercher...',
                               border: InputBorder.none,
@@ -249,7 +268,7 @@ class _ItemsPageState extends State<ItemsPage> {
                                 borderRadius: BorderRadius.circular(10),
                                 child: FractionallySizedBox(
                                   child: Image.asset(
-                                     items[0].colorImagesMap.values.first[0],
+                                    items[0].colorImagesMap.values.first[0],
                                     height: 170,
                                     width: 150,
                                     fit: BoxFit.cover,
