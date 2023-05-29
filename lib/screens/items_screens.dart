@@ -28,35 +28,80 @@ class _ItemsPageState extends State<ItemsPage> {
 
   List<Item> items = [
     Item(
-        image: ['assets/vetements.jpg', 'assets/vetements.jpg', 'assets/vetements.jpg'],
-        title: 'Item 1',
-        isLiked: false,
-        subtitle: 'Categoriede l\'item 1',
-        price: '\$10'),
+      id: '1',
+      title: 'Item 1',
+      brand: 'Brand 1',
+      price: 10.0,
+      colorImagesMap: {
+        'white': ['assets/images/vetements.png'],
+      },
+      description: 'Description of Item 1',
+      sizeQuantityMap: {
+        // Size-quantity associations
+      },
+      likeCount: 0,
+      isLiked: false,
+    ),
     Item(
-        image: ['assets/vetements.jpg', 'assets/vetements.jpg', 'assets/vetements.jpg'],
-        title: 'Item 2',
-        isLiked: false,
-        subtitle: 'Categoriede l\'item 2',
-        price: '\$20'),
+      id: '2',
+      title: 'Item 2',
+      brand: 'Brand 2',
+      price: 20.0,
+      colorImagesMap: {
+        // Color-image associations
+      },
+      description: 'Description of Item 2',
+      sizeQuantityMap: {
+        // Size-quantity associations
+      },
+      likeCount: 0,
+      isLiked: false,
+    ),
     Item(
-        image: ['assets/vetements.jpg', 'assets/vetements.jpg', 'assets/vetements.jpg'],
-        title: 'Item 3',
-        isLiked: false,
-        subtitle: 'Categoriede l\'item 3',
-        price: '\$15'),
+      id: '3',
+      title: 'Item 3',
+      brand: 'Brand 3',
+      price: 15.0,
+      colorImagesMap: {
+        // Color-image associations
+      },
+      description: 'Description of Item 3',
+      sizeQuantityMap: {
+        // Size-quantity associations
+      },
+      likeCount: 0,
+      isLiked: false,
+    ),
     Item(
-        image: ['assets/vetements.jpg', 'assets/vetements.jpg', 'assets/vetements.jpg'],
-        title: 'Item 4',
-        isLiked: false,
-        subtitle: 'Categoriede l\'item 4',
-        price: '\$25'),
+      id: '4',
+      title: 'Item 4',
+      brand: 'Brand 4',
+      price: 25.0,
+      colorImagesMap: {
+        // Color-image associations
+      },
+      description: 'Description of Item 4',
+      sizeQuantityMap: {
+        // Size-quantity associations
+      },
+      likeCount: 0,
+      isLiked: false,
+    ),
     Item(
-        image: ['assets/vetements.jpg', 'assets/vetements.jpg', 'assets/vetements.jpg'],
-        title: 'Item 5',
-        isLiked: false,
-        subtitle: 'Categoriede l\'item 5',
-        price: '\$18'),
+      id: '5',
+      title: 'Item 5',
+      brand: 'Brand 5',
+      price: 18.0,
+      colorImagesMap: {
+        // Color-image associations
+      },
+      description: 'Description of Item 5',
+      sizeQuantityMap: {
+        // Size-quantity associations
+      },
+      likeCount: 0,
+      isLiked: false,
+    ),
   ];
 
   List<Item> filteredItems = [];
@@ -70,14 +115,14 @@ class _ItemsPageState extends State<ItemsPage> {
   void applyFilter() {
     switch (_selectedFilter) {
       case 'Moins chers':
-        filteredItems = items
-            .where((item) => double.parse(item.price.substring(1)) < 20)
-            .toList();
+        filteredItems = List.from(items);
+        filteredItems
+            .sort((a, b) => a.price.compareTo(b.price)); // Sort the copied list
         break;
       case 'Plus chers':
-        filteredItems = items
-            .where((item) => double.parse(item.price.substring(1)) >= 20)
-            .toList();
+        filteredItems = List.from(items); // Make a copy of the original list
+        filteredItems.sort((a, b) => b.price
+            .compareTo(a.price)); // Sort the copied list in descending order
         break;
       case 'Nouveautés':
         filteredItems =
@@ -184,8 +229,7 @@ class _ItemsPageState extends State<ItemsPage> {
                 return GestureDetector(
                   onTap: () {
                     // Navigate to the new page with item details
-                   Navigator.pushNamed(context, '/item',
-                        arguments: item);
+                    Navigator.pushNamed(context, '/item', arguments: item);
                   },
                   child: Container(
                     color: Colors.transparent,
@@ -205,7 +249,7 @@ class _ItemsPageState extends State<ItemsPage> {
                                 borderRadius: BorderRadius.circular(10),
                                 child: FractionallySizedBox(
                                   child: Image.asset(
-                                    item.image[0],
+                                    item.colorImagesMap.keys.first[0],
                                     height: 170,
                                     width: 150,
                                     fit: BoxFit.cover,
@@ -252,9 +296,9 @@ class _ItemsPageState extends State<ItemsPage> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                Text(item.subtitle),
+                                Text(item.brand),
                                 Text(
-                                  item.price,
+                                  item.price.toString(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16.0,
@@ -276,4 +320,3 @@ class _ItemsPageState extends State<ItemsPage> {
     );
   }
 }
-
