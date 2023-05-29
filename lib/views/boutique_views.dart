@@ -43,6 +43,18 @@ class _BoutiquePage extends State<BoutiquePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          "Shopping",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24
+          ),
+        ),
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

@@ -102,7 +102,12 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
               ),
               child: IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/shoppingCart');
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/home',
+                    (route) => false,
+                    arguments: 1,
+                  );
                 },
                 icon: Icon(
                   Icons.shopping_cart,
@@ -173,7 +178,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      widget.item.subtitle,
+                      widget.item.brand,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,

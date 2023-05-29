@@ -5,12 +5,15 @@ import '../views/profile_views.dart';
 import '../views/panier_views.dart';
 
 class HomePage extends StatefulWidget {
+  final int? initialIndex; 
+  HomePage({this.initialIndex});
+  
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
+  late int _currentIndex;
 
   final List<Widget> _views = [
     BoutiquePage(),
@@ -19,20 +22,14 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex ?? 0;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          "Shopping",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 24
-          ),
-        ),
-        iconTheme: IconThemeData(color: Colors.black),
-      ),
       body: _views[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

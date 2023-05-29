@@ -23,7 +23,13 @@ class Routes {
       case login:
         return MaterialPageRoute(builder: (_) => LoginPage());
       case home:
-        return MaterialPageRoute(builder: (_) => HomePage());
+        if (args != null) {
+          int? index = args as int;
+          return MaterialPageRoute(
+              builder: (_) => HomePage(initialIndex: index));
+        }
+        else 
+          return MaterialPageRoute(builder: (_) => HomePage());
       case shoppingCart:
         return MaterialPageRoute(builder: (_) => PanierPage());
       case register:

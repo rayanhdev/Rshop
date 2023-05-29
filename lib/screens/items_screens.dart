@@ -33,7 +33,7 @@ class _ItemsPageState extends State<ItemsPage> {
       brand: 'Brand 1',
       price: 10.0,
       colorImagesMap: {
-        'white': ['assets/images/vetements.png'],
+        'white': ['assets/vetements.jpg'],
       },
       description: 'Description of Item 1',
       sizeQuantityMap: {
@@ -48,7 +48,7 @@ class _ItemsPageState extends State<ItemsPage> {
       brand: 'Brand 2',
       price: 20.0,
       colorImagesMap: {
-        // Color-image associations
+        'white': ['assets/vetements.jpg'],
       },
       description: 'Description of Item 2',
       sizeQuantityMap: {
@@ -63,7 +63,7 @@ class _ItemsPageState extends State<ItemsPage> {
       brand: 'Brand 3',
       price: 15.0,
       colorImagesMap: {
-        // Color-image associations
+        'white': ['assets/vetements.jpg'],
       },
       description: 'Description of Item 3',
       sizeQuantityMap: {
@@ -78,7 +78,7 @@ class _ItemsPageState extends State<ItemsPage> {
       brand: 'Brand 4',
       price: 25.0,
       colorImagesMap: {
-        // Color-image associations
+        'white': ['assets/vetements.jpg'],
       },
       description: 'Description of Item 4',
       sizeQuantityMap: {
@@ -93,7 +93,7 @@ class _ItemsPageState extends State<ItemsPage> {
       brand: 'Brand 5',
       price: 18.0,
       colorImagesMap: {
-        // Color-image associations
+        'white': ['assets/vetements.jpg'],
       },
       description: 'Description of Item 5',
       sizeQuantityMap: {
@@ -249,7 +249,7 @@ class _ItemsPageState extends State<ItemsPage> {
                                 borderRadius: BorderRadius.circular(10),
                                 child: FractionallySizedBox(
                                   child: Image.asset(
-                                    item.colorImagesMap.keys.first[0],
+                                     items[0].colorImagesMap.values.first[0],
                                     height: 170,
                                     width: 150,
                                     fit: BoxFit.cover,
